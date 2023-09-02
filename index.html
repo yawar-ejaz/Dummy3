@@ -18,7 +18,7 @@
     </header>
     <div class="container">
         <div id="main" class="card card-body">
-            <h2 class="title">Add Items</h2>
+            <h2 class="title" id="title">Add Items</h2>
             <form class="form-inline mb-3">
                 <input type="text" class="form-control mr-2">
                 <input type="submit" class="btn btn-dark" value="Submit">
@@ -32,7 +32,15 @@
             </ul>
         </div>
     </div>
+    <script>
+        let heading=document.getElementById("main-header");
+        heading.style.border="solid 3px black";
 
+        let head=document.getElementById("title");
+        head.style.fontWeight="bold";
+        head.style.color="green";
+        // console.log(items);
+    </script>
 </body>
 
 </html>
