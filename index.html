@@ -29,6 +29,7 @@
                 <li class="list-group-item">Item 2</li>
                 <li class="list-group-item">Item 3</li>
                 <li class="list-group-item">Item 4</li>
+                <li>Item 5</li>
             </ul>
         </div>
     </div>
@@ -44,6 +45,11 @@
         items[2].style.background="lightgreen";
         for(let i=0; i<items.length; i++){
             items[i].style.fontWeight="bold";
+        }
+
+        let li=document.getElementsByTagName("li");
+        for(let i=0; i<li.length; i++){
+            li[i].style.color="red";
         }
     </script>
 </body>
