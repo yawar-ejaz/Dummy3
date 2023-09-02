@@ -51,6 +51,21 @@
         for(let i=0; i<li.length; i++){
             li[i].style.color="red";
         }
+
+        let secondItem=document.querySelector("li:nth-child(2)");
+        secondItem.style.background="darkblue";
+        
+        let thirdItem=document.querySelector("li:nth-child(3)");
+        thirdItem.style.display="none";
+
+        let list2=document.querySelectorAll("li");
+        list2[1].style.color="yellow";
+        for(let i=0; i<list2.length; i++){
+            if(i%2==0){
+                list2[i].style.background="green";
+            }
+        }
+
     </script>
 </body>
 
