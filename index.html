@@ -26,18 +26,19 @@
         <div id="main" class="card card-body">
             <h2 class="title">Add Items</h2>
             <form id="addForm" class="form-inline mb-3">
-                <input type="text" class="form-control mr-2" id="item">
-                <input type="submit" class="btn btn-dark" value="Submit">
+                <input type="text" class="form-control mr-2" id="item" placeholder="Item name" maxlength="20" required>
+                <input type="text" class="form-control mr-2" id="itemDesc" placeholder="Item description" maxlength="20" required>
+                <input type="submit" class="btn btn-dark" value="Add">
             </form>
             <h2 class="title">Items</h2>
             <ul id="items" class="list-group">
-                <li class="list-group-item">Item 1 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                <li class="list-group-item"><b>Item 1</b><span class="ml-5">Car</span><button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
                 </li>
-                <li class="list-group-item">Item 2 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                <li class="list-group-item"><b>Item 2</b><span class="ml-5">Lighter</span><button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
                 </li>
-                <li class="list-group-item">Item 3 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                <li class="list-group-item"><b>Item 3</b><span class="ml-5">Cake</span><button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
                 </li>
-                <li class="list-group-item">Item 4 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                <li class="list-group-item"><b>Item 4</b><span class="ml-5">Basket</span><button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
                 </li>
             </ul>
         </div>
@@ -63,13 +64,22 @@
 
             // Get input value
             var newItem = document.getElementById('item').value;
+            document.getElementById('item').value="";
+            var newItemDesc = document.getElementById('itemDesc').value;
+            document.getElementById('itemDesc').value="";
 
             // Create new li element
             var li = document.createElement('li');
+            var bold = document.createElement('b');
+            var span = document.createElement('span');
+            span.className="ml-5";
             // Add class
             li.className = 'list-group-item';
             // Add text node with input value
-            li.appendChild(document.createTextNode(newItem));
+            bold.appendChild(document.createTextNode(newItem));
+            span.appendChild(document.createTextNode(newItemDesc));
+            li.appendChild(bold);
+            li.appendChild(span);
 
             // Create del button element
             var deleteBtn = document.createElement('button');
@@ -110,7 +120,8 @@
             // Convert to an array
             Array.from(items).forEach(function (item) {
                 var itemName = item.firstChild.textContent;
-                if (itemName.toLowerCase().indexOf(text) != -1) {
+                var itemDesc = item.children[1].textContent;
+                if (itemName.toLowerCase().indexOf(text) != -1 || itemDesc.toLowerCase().indexOf(text) != -1) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
