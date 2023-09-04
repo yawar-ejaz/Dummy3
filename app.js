@@ -11,7 +11,7 @@ function addToLocalStorage(e) {
     e.target.name.value = "";
     e.target.mail.value = "";
     e.target.phone.value = "";
-    
+
     let person = {
         name: name,
         mail: mail,
@@ -19,5 +19,8 @@ function addToLocalStorage(e) {
     };
     
     person_serialized = JSON.stringify(person);
-    localStorage.setItem("Object 1", person_serialized);
+
+    let blank_space = document.getElementById("blank-space");
+    blank_space.innerHTML = person_serialized;
+    localStorage.setItem(mail, person_serialized);
 }
