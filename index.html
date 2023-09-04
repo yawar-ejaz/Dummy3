@@ -4,68 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
         integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <title>Item Lister</title>
+    <title>Document</title>
 </head>
 
 <body>
     <header id="main-header" class="bg-success text-white p-4 mb-3">
         <div class="container">
-            <h1 id="header-title">Item Lister <span style="display:none">123</span></h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 id="header-title">Item Lister</h1>
+                </div>
+                <div class="col-md-6 align-self-center">
+                    <input type="text" class="form-control" id="filter" placeholder="Search Items...">
+                </div>
+            </div>
         </div>
     </header>
     <div class="container">
         <div id="main" class="card card-body">
-            <h2 class="title" id="title">Add Items</h2>
-            <form class="form-inline mb-3">
-                <input type="text" class="form-control mr-2">
+            <h2 class="title">Add Items</h2>
+            <form id="addForm" class="form-inline mb-3">
+                <input type="text" class="form-control mr-2" id="item">
                 <input type="submit" class="btn btn-dark" value="Submit">
             </form>
             <h2 class="title">Items</h2>
             <ul id="items" class="list-group">
-                <li class="list-group-item">Item 1</li>
-                <li class="list-group-item">Item 2</li>
-                <li class="list-group-item">Item 3</li>
-                <li class="list-group-item">Item 4</li>
+                <li class="list-group-item">Item 1 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                </li>
+                <li class="list-group-item">Item 2 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                </li>
+                <li class="list-group-item">Item 3 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                </li>
+                <li class="list-group-item">Item 4 <button class="btn btn-danger btn-sm float-right delete">X</button><button class="btn btn-primary btn-sm float-right mr-3 edit">Edit</button>
+                </li>
             </ul>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
     <script>
-        let items=document.querySelector("#items");
-        let form=document.querySelector(".form-inline");
+        var form = document.getElementById('addForm');
+        var itemList = document.getElementById('items');
+        var filter = document.getElementById('filter');
 
-        items.parentNode.style.border="solid 3px darkblue";
+        // Form submit event
+        form.addEventListener('submit', addItem);
+        // Delete event
+        itemList.addEventListener('click', removeItem);
+        // Filter event
+        filter.addEventListener('keyup', filterItems);
 
-        items.parentElement.style.background="#ddd";
+        // Add item
+        function addItem(e) {
+            e.preventDefault();
 
-        items.lastElementChild.style.background="lightblue";
+            // Get input value
+            var newItem = document.getElementById('item').value;
 
-        console.log(items.lastChild);
+            // Create new li element
+            var li = document.createElement('li');
+            // Add class
+            li.className = 'list-group-item';
+            // Add text node with input value
+            li.appendChild(document.createTextNode(newItem));
 
-        items.firstElementChild.style.background="red";
+            // Create del button element
+            var deleteBtn = document.createElement('button');
+            var editBtn = document.createElement('button');
 
-        console.log(items.firstChild);
+            // Add classes to del button
+            deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+            editBtn.className = 'btn btn-primary btn-sm float-right mr-3 edit';
 
-        form.nextElementSibling.style.color="maroon";
-        form.nextElementSibling.style.borderBottom="solid 2px maroon";
+            // Append text node
+            deleteBtn.appendChild(document.createTextNode('X'));
+            editBtn.appendChild(document.createTextNode('Edit'));
 
-        console.log(form.nextSibling);
+            // Append button to li
+            li.appendChild(deleteBtn);
+            li.appendChild(editBtn);
 
-        form.previousElementSibling.style.color="darkblue";
-        form.previousElementSibling.style.borderBottom="solid 2px darkblue";
+            // Append li to list
+            itemList.appendChild(li);
+        }
 
-        console.log(form.previousSibling);
+        // Remove item
+        function removeItem(e) {
+            if (e.target.classList.contains('delete')) {
+                if (confirm('Are You Sure?')) {
+                    var li = e.target.parentElement;
+                    itemList.removeChild(li);
+                }
+            }
+        }
 
-        let newLi = document.createElement("li");
-        newLi.className="list-group-item";
-        // newLi.setAttribute("id", "custom-li");
-        let text=document.createTextNode("Item 5");
-        newLi.appendChild(text);
-        console.log(newLi);
-
-        items.insertBefore(newLi, items.lastChild);
+        // Filter Items
+        function filterItems(e) {
+            // convert text to lowercase
+            var text = e.target.value.toLowerCase();
+            // Get lis
+            var items = itemList.getElementsByTagName('li');
+            // Convert to an array
+            Array.from(items).forEach(function (item) {
+                var itemName = item.firstChild.textContent;
+                if (itemName.toLowerCase().indexOf(text) != -1) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 
