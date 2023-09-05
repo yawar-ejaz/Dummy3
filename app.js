@@ -5,7 +5,15 @@ blank_ul.addEventListener("click", removeItem);
 function removeItem(e) {
     if (e.target.classList.contains("delete")) {
         let li = e.target.parentElement;
+        const text = li.firstChild.textContent;
+
+        person_deserialized = JSON.parse(text);
+        console.log(person_deserialized);
+        let key = person_deserialized.mail;
+
+        console.log(key);
         blank_ul.removeChild(li);
+        localStorage.removeItem(key);
     }
 }
 
@@ -16,7 +24,7 @@ function addToLocalStorage(e) {
     let name = e.target.name.value;
     let mail = e.target.mail.value;
     let phone = e.target.phone.value;
-    
+
     e.target.name.value = "";
     e.target.mail.value = "";
     e.target.phone.value = "";
@@ -26,7 +34,7 @@ function addToLocalStorage(e) {
         mail: mail,
         phone: phone
     };
-    
+
     person_serialized = JSON.stringify(person);
     localStorage.setItem(mail, person_serialized);
 
@@ -43,7 +51,7 @@ function addToLocalStorage(e) {
 
 function printList() {
     let l = localStorage.length;
-    for (let i = 0; i < l; i++){
+    for (let i = 0; i < l; i++) {
         let k = localStorage.key(i);
         let val = localStorage.getItem(k);
 
